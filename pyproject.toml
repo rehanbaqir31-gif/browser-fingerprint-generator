@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fpforge"
+dynamic = ["version"]
+description = "Realistic, internally consistent browser fingerprint profiles, sampled from real-browser data, with a Playwright injector."
+readme = "README.md"
+requires-python = ">=3.9"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+keywords = ["browser", "fingerprint", "playwright", "privacy", "testing", "user-agent", "anti-detect"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Internet :: WWW/HTTP :: Browsers",
+    "Typing :: Typed",
+]
+dependencies = []
+
+[project.optional-dependencies]
+playwright = ["playwright>=1.49"]
+dev = [
+    "pytest>=7.4",
+    "playwright>=1.49",
+    "mypy>=1.8",
+    "tzdata; sys_platform == 'win32'",
+]
+
+[project.scripts]
+fpforge = "fpforge.cli:main"
+
+[tool.setuptools.dynamic]
+version = { attr = "fpforge._version.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+fpforge = ["data/*", "injector/inject.js", "py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.mypy]
+ignore_missing_imports = true
+warn_unused_ignores = true
+check_untyped_defs = true

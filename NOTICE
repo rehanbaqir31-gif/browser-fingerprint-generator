@@ -1,0 +1,34 @@
+fpforge
+Copyright 2026 fpforge contributors
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+-------------------------------------------------------------------------------
+Third-party material
+-------------------------------------------------------------------------------
+
+Apify fingerprint-suite  (https://github.com/apify/fingerprint-suite)
+Copyright 2018 Apify Technologies s.r.o.
+Licensed under the Apache License, Version 2.0.
+
+  * src/fpforge/data/fingerprint-network-definition.zip
+  * src/fpforge/data/header-network-definition.zip
+  * src/fpforge/data/input-network-definition.zip
+  * src/fpforge/data/headers-order.json
+  * src/fpforge/data/browser-helper-file.json
+      Redistributed unmodified from the packages "fingerprint-generator" and
+      "header-generator". They are trained models of real browser traffic.
+
+  * src/fpforge/network.py
+      A Python port of the sampling code in the package
+      "generative-bayesian-network" (bayesian-network.ts / bayesian-node.ts).
+      Changed: translated from TypeScript to Python; the training code is not
+      included.
+
+IANA Time Zone Database (https://www.iana.org/time-zones), public domain.
+  * the COUNTRY_TIMEZONES table in src/fpforge/locale_data.py was generated
+    from its zone.tab file.
+
+Chrome version numbers come from the official Chrome Releases blog and
+Chrome for Testing; "Chrome" is a trademark of Google LLC. fpforge is not
+affiliated with Apify, Google or Dolphin Anty.
