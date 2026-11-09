@@ -137,3 +137,9 @@ def test_available_reports_dataset_contents(generator):
     avail = generator.available()
     assert avail[("windows", "chrome")] > 10
     assert ("linux", "safari") not in avail
+
+
+def test_profiles_always_have_a_gpu_record(generator):
+    for i in range(200):
+        p = generator.generate(os="windows", seed="gpu-%d" % i)
+        assert p["webgl"]["unmaskedRenderer"] and p["webgl"]["unmaskedVendor"]

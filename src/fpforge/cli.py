@@ -92,6 +92,7 @@ def cmd_launch(a: argparse.Namespace) -> int:
             else:  # run until the user closes every window
                 while session.context.pages:
                     session.context.pages[0].wait_for_event("close", timeout=0)
+                    # a closed page is removed from the list before the next check
         finally:
             session.close()
     return 0

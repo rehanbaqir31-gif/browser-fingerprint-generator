@@ -193,6 +193,8 @@ class FingerprintGenerator:
             return False
         video = data.get("videoCard") or {}
         renderer = video.get("renderer") or ""
+        if not renderer or not video.get("vendor"):
+            return False  # a profile without a GPU would show the real WebGL renderer
         if any(m in renderer for m in MOBILE_GPU_MARKERS):
             return False
         if not allow_software_gpu and any(m in renderer for m in SOFTWARE_GPU_MARKERS):

@@ -127,6 +127,10 @@ def apply_profile(context: Any, profile: Mapping[str, Any]) -> None:
     context.on("page", hook)
 
 
+# (channel, headless) -> engine version, probed once per process
+_ENGINE_VERSIONS: Dict[Any, str] = {}
+
+
 def launch_context(
     playwright: Any,
     profile: Mapping[str, Any],
@@ -167,14 +171,16 @@ def launch_context(
 
     browser = None
     if match_browser_version:
-        probe = playwright.chromium.launch(**launch_kwargs)
-        try:
-            profile = match_engine_version(profile, probe.version)
-        finally:
+        key = (launch_kwargs["channel"], headless)
+        version = _ENGINE_VERSIONS.get(key)
+        if version is None:
+            probe = playwright.chromium.launch(**launch_kwargs)
+            version = _ENGINE_VERSIONS[key] = probe.version
             if user_data_dir:
                 probe.close()
-        if not user_data_dir:
-            browser = probe
+            else:
+                browser = probe
+        profile = match_engine_version(profile, version)
     if user_data_dir:
         context = playwright.chromium.launch_persistent_context(
             user_data_dir, **launch_kwargs, **context_options(profile), **context_kwargs
